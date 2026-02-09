@@ -1,10 +1,6 @@
 watch_stylesheet: true
 watch_config: true
 debug: false
-komorebi:
-  start_command: "komorebic start --whkd"
-  stop_command: "komorebic stop --whkd"
-  reload_command: "komorebic reload-configuration"
 bars:
   status-bar:
     enabled: true
@@ -14,9 +10,9 @@ bars:
       position: "top"
       center: false
     blur_effect:
-      enabled: true 
+      enabled: false 
       acrylic: false 
-      dark_mode: true
+      dark_mode: false 
       round_corners: false
       border_color: None
     window_flags:
@@ -24,28 +20,27 @@ bars:
       windows_app_bar: true
     dimensions:
       width: "100%"
-      height: 30
+      height: 30 
     widgets:
       left:
         [
           "home",
           "glazewm_workspaces",
+          "glazewm_dir",
           "active_window"
         ] 
       center: [
         ]
       right:
         [
-          "volume",
-          "power_menu",
-          "media",
-          "systray",
+          "song_details",
+          "media_controls",
           "battery",
           "wifi",
-          "clock"
+          "clock",
         ]
 widgets:
-  glazewm_workspaces:
+   glazewm_workspaces:
     type: "glazewm.workspaces.GlazewmWorkspacesWidget"
     options:
       offline_label: "GlazeWM Offline"
@@ -66,25 +61,28 @@ widgets:
         hide_label: false
         hide_duplicates: false
         hide_floating: false
-      animation: false
-  media:
-    type: "yasb.media.MediaWidget"
+
+   glazewm_dir:
+    type: "glazewm.binding_mode.GlazewmBindingModeWidget"
     options:
-      label: "{title} - {artist}"
-      label_alt: "{title}"
-      max_field_size:
-        label: 20
-        label_alt: 30
-      show_thumbnail: false
-      controls_only: true
-      controls_left: true
-      hide_empty: true
-      icons:
-        prev_track: "\uf048"
-        next_track: "\uf04b"
-        play: "\uf04c"
-        pause: "\uf051"
-  active_window:
+      hide_if_no_active: true 
+      label_if_no_active: "No binding mode active"
+      default_icon: "\uf071"
+      icons: 
+        none: ""
+        resize: "\uf071"
+        pause: "\uf28c"
+      binding_modes_to_cycle_through: [
+        "none", # none handles if no binding mode is active
+        "resize",
+        "pause"
+      ]
+      callbacks:
+        on_left: "next_binding_mode"
+        on_middle: "toggle_label"
+        on_right: "disable_binding_mode"
+
+   active_window:
     type: "yasb.active_window.ActiveWindowWidget"
     options:
       label: "{win[title]}"
@@ -95,14 +93,51 @@ widgets:
       max_length: 56
       max_length_ellipsis: "..."
       monitor_exclusive: true
-  clock:
+
+   song_details:
+    type: "yasb.media.MediaWidget"
+    options:
+      label: "{title} - {artist}"
+      label_alt: "{title}"
+      max_field_size:
+        label: 32 
+        label_alt: 30
+        truncate_whole_label: false
+      show_thumbnail: true 
+      thumbnail_alpha: 100 
+      thumbnail_padding: 15 
+      hide_empty: true
+      controls_hide: true
+
+   systray:
+    type: "yasb.systray.SystrayWidget"
+    options:
+      class_name: "systray"
+      label_collapsed: "\udb83\ude33"
+      label_expanded: "\udb86\udd78"
+      label_position: "left" # Can be "left" or "right"
+      icon_size: 18 # Can be any integer between 8 and 64
+      pin_click_modifier: "alt" # Can be "ctrl", "alt" or "shift"
+      show_unpinned: false
+
+
+   media_controls:
+    type: "yasb.media.MediaWidget"
+    options:
+      controls_only: true
+      hide_empty: false
+      icons:
+        prev_track: "\udb81\udcae"
+        next_track: "\udb81\udcad" 
+        play: "\udb81\udc0a"
+        pause: "\udb80\udfe4"
+       
+   clock:
     type: "yasb.clock.ClockWidget"
     options:
-      label: "{%a %d, %b %H:%M}"
+      label: "{%a %I:%M %p}"
       label_alt: "{%A %d %B %Y, %H:%M}"
-      #locale: 'en_EN' # Langugae for date, you can set your own, example fr_FR
-      timezones: [] #Looking up time zone info from registry
-      #timezones: ["America/Montreal"]
+      timezones: ["Asia/Kolkata"] 
       callbacks:
         on_right: "exec cmd.exe /c start ms-clock:"
       calendar: 
@@ -112,7 +147,7 @@ widgets:
         border_color: "System"
         alignment: "center"
         direction: "down"
-  weather:
+   weather:
     type: "yasb.weather.WeatherWidget"
     options:
       label: "<span>{icon}</span> {temp}"
@@ -130,7 +165,7 @@ widgets:
         rainyNight: "\udb81\ude7e"
         blizzardDay: "\uebaa"
         default: "\uebaa"
-  volume:
+   volume:
     type: "yasb.volume.VolumeWidget"
     options:
       label: "{icon}"
@@ -150,7 +185,7 @@ widgets:
         border_color: 'System'
         alignment: 'center'
         direction: 'down'
-  power_menu:
+   power_menu:
     type: "yasb.power_menu.PowerMenuWidget"
     options:
       label: "\uf011"
@@ -166,7 +201,7 @@ widgets:
         restart: ["\uead2","Restart"]
         hibernate: ["\uf28e","Hibernate"]
         cancel: ["\udb81\udf3a","Cancel"]
-  settings:
+   settings:
     type: "yasb.applications.ApplicationsWidget"
     options:
       label: "{data}"
@@ -177,7 +212,7 @@ widgets:
         left: 0
         bottom: 0
         right: 0
-  win_button:
+   win_button:
     type: "yasb.custom.CustomWidget"
     options:
       label: "󰖳"
@@ -185,7 +220,7 @@ widgets:
       class_name: "win-button-widget"
       callbacks:
         on_left: "exec start_menu"
-  home:
+   home:
     type: "yasb.home.HomeWidget"
     options:
       label: "󰖳"
@@ -204,7 +239,7 @@ widgets:
         left: 6
         bottom: 0
         right: 12
-  battery:
+   battery:
     type: "yasb.battery.BatteryWidget"
     options:
       label: "{icon}"
@@ -214,7 +249,7 @@ widgets:
       callbacks:
         on_left: "exec quick_settings"
         on_right: "exec cmd.exe /c start ms-settings:powersleep"
-  wifi:
+   wifi:
     type: "yasb.wifi.WifiWidget"
     options:
       label: "<span>{wifi_icon}</span>"
@@ -231,17 +266,7 @@ widgets:
         "\udb82\udd25",  # Icon for 41-80% strength
         "\udb82\udd28"   # Icon for 81-100% strength
       ]
-  systray:
-    type: "yasb.systray.SystrayWidget"
-    options:
-      class_name: "systray"
-      label_collapsed: "\udb81\udeb6"
-      label_expanded: "\udb82\ude03"
-      label_position: "left" # Can be "left" or "right"
-      icon_size: 15 # Can be any integer between 8 and 64
-      pin_click_modifier: "alt" # Can be "ctrl", "alt" or "shift"
-      show_unpinned: false
-  notifications:
+   notifications:
     type: "yasb.notifications.NotificationsWidget"
     options:
       label: "<span>\udb80\udd78</span>"

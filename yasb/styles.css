@@ -1,9 +1,6 @@
-/* ================================
-GLOBAL DEFAULT (TEXT)
-================================ */
 
 * {
-	font-size: 13px;
+	font-size: 16px;
 	color: #ffffff;
 	font-family: "SF Pro Medium";
 	margin: 0;
@@ -11,45 +8,13 @@ GLOBAL DEFAULT (TEXT)
 	text-rendering: optimizeLegibility;
 }
 
-
-/* ================================
-ICON FONT OVERRIDE
-================================ */
-
-.icon,
-.widget .icon,
-.win-button-widget .label,
-.media-widget .btn,
-.volume-widget .icon,
-.weather-widget .icon,
-.notification-widget .icon,
-.systray .button,
-.power-menu-popup .button .icon,
-.home-widget .icon {
-	font-family: "JetBrainsMono Nerd Font";
-}
-
-
-/* Media buttons still use Fluent */
-.media-widget .btn {
-	font-family: "Segoe Fluent Icons";
-}
-
-
-/* ================================
-BAR
-================================ */
-
 .yasb-bar {
 	padding: 0 8px;
 	margin: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
 }
 
-
-/* ================================
-WIDGET BASE
-================================ */
 
 .widget {
 	padding: 0 8px;
@@ -65,28 +30,6 @@ WIDGET BASE
 }
 
 
-/* ================================
-APPS
-================================ */
-
-.apps-widget {
-	padding: 0;
-}
-
-.apps-widget .widget-container {
-	background-color: transparent;
-}
-
-.apps-widget .label {
-	font-size: 14px;
-	padding: 0px 2px 1px 2px;
-	margin: 0 8px;
-}
-
-.apps-widget .label:hover {
-	color: #fff;
-}
-
 
 /* ================================
 ACTIVE WINDOW
@@ -94,6 +37,10 @@ ACTIVE WINDOW
 
 .active-window-widget .icon {
 	padding: 0;
+}
+
+.active-window-widget .widget-container .label {
+	font-size: 14px;
 }
 
 
@@ -180,39 +127,6 @@ WEATHER
 }
 
 
-/* ================================
-MEDIA
-================================ */
-
-.media-widget {
-	padding: 0;
-	margin: 0 8px 0 0;
-	border-radius: 16px;
-}
-
-.media-widget .label {
-	display: none;
-	background-color: transparent;
-}
-
-.media-widget .btn {
-	color: #ffffff;
-	padding: 0;
-	margin: 0;
-	font-weight: 500;
-	font-size: 1px;
-}
-
-.media-widget .btn.play {
-	font-size: 17px;
-}
-
-.media-widget .btn.disabled,
-.media-widget .btn.disabled:hover {
-	color: #7d8297;
-	background-color: transparent;
-}
-
 
 /* ================================
 TASKBAR / WIN BUTTON
@@ -239,7 +153,7 @@ SYSTRAY
 .systray {
 	background: transparent;
 	border: none;
-	margin: 0;
+	margin: -1px;
 }
 
 .systray .unpinned-container,
@@ -248,24 +162,14 @@ SYSTRAY
 	border-radius: 8px;
 }
 
-.systray .button {
-	border-radius: 4px;
-	padding: 0 6px;
-	margin: 4px;
-}
-
-.systray .button:hover {
-	background: transparent;
-}
-
 .systray .button[dragging=true] {
-	border-color: rgba(211, 211, 211, 0.705);
+	border-color: rgba(0, 0, 0, 0.705);
 }
 
 .systray .unpinned-visibility-btn {
 	border-radius: 4px;
-	height: 20px;
-	width: 16px;
+	height: 18px;
+	width: 18px;
 }
 
 
@@ -457,8 +361,8 @@ QToolTip {
 .glazewm-workspaces .ws-btn.focused_empty .ws-number,
 .glazewm-workspaces .ws-btn.active_populated .ws-number,
 .glazewm-workspaces .ws-btn.active_empty .ws-number {
-    background-color: rgba(255, 255, 255, 0.2); /* Brighter background */
-    color: #58d9d9;
+    background-color: rgba(255, 255, 255, 0.6); /* Brighter background */
+    color: #0b0d12;
     font-weight: 600;
 }
 
@@ -466,10 +370,6 @@ QToolTip {
 .glazewm-workspaces .ws-btn.empty .ws-number {
     opacity: 0.6;
 }
-
-/* ============================================================================
-   WORKSPACE ICONS
-   ============================================================================ */
 
 /* Icons container - light background */
 .glazewm-workspaces .ws-icons {
@@ -591,3 +491,17 @@ QToolTip {
     backdrop-filter: blur(5px);
 }
 */
+
+.media-widget .btn {
+    min-width: 24px;
+    min-height: 30px;
+    max-width: 30px;
+    max-height: 30px;
+
+    padding: 0px;
+    margin: 0px 0px;
+
+		font-size: 22px;
+		font-family: "Symbols Nerd Font Mono";
+		text-shadow: none;
+}
